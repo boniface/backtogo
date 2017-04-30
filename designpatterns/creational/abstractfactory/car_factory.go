@@ -14,7 +14,7 @@ type CarFactory struct {
 
 }
 
-func (c *CarFactory) NewVehicle(v int) (Vehicle, error)  {
+func (c *CarFactory) Build(v int) (Vehicle, error)  {
 	switch v {
 	case LuxuryCarType:
 		return new(LuxuryCar), nil
