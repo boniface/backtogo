@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"golang.org/x/net/html"
 	"math"
-	"os"
 )
 
 func hypot(x, y float64) float64 {
@@ -36,14 +35,12 @@ func main() {
 	fmt.Printf("%T\n", methodB)
 	fmt.Printf("%T\n There is a function ", math.Sin)
 
-	doc, err := html.Parse(os.Stdin)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "findlinks1: %v\n", err)
-		os.Exit(1)
-	}
-	for _, link := range visit(nil, doc) {
-		fmt.Println(link)
-	}
+	data := 10
+	ptr := &data
+	fmt.Println("Value stored at variable var is ", data)
+	fmt.Println("Value stored at variable var is ", *ptr)
+	fmt.Println("The address of variable var is ", &data)
+	fmt.Println("The address of variable var is ", ptr)
 
 }
 
