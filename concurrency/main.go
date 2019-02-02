@@ -3,23 +3,23 @@ package main
 import (
 	"fmt"
 	"sync"
-	"time"
 )
 
 func main() {
-	var wg sync.WaitGroup
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		fmt.Println(" First Goroutine is Sleeping ")
-		time.Sleep(1)
-	}()
 
-	wg.Add(1)
-	go func() {
+	hello := func(wg *sync.WaitGroup, id int) {
 		defer wg.Done()
-		fmt.Println(" Second goroutine is sleeping ")
-	}()
+		fmt.Println(" hello World ", id)
+
+	}
+
+	const numberGreeters = 5
+	var wg sync.WaitGroup
+	wg.Add(numberGreeters)
+	for i := 0; i < numberGreeters; i++ {
+		go hello(&wg, i+1)
+	}
+
 	wg.Wait()
-	fmt.Println("All goroutines complete")
+
 }
