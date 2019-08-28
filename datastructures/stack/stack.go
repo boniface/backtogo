@@ -14,7 +14,7 @@ type Stack struct {
 	size int
 }
 
-// Methods push
+// ADTS for the Stack Size(), Push(), Pop(), Print(), IsEmpty(),
 
 // Get the Size of the Stack
 func (stack *Stack) Size() int {
