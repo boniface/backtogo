@@ -4,7 +4,7 @@ import "fmt"
 
 func main() {
 	data := []int{9, 3, 6, 7, 8, 2, 1, 4}
-	BubbleSort(data, less)
+	BubbleSort(data, more)
 	fmt.Println(" the Sorted Data is ", data)
 
 }
@@ -24,6 +24,7 @@ func BubbleSort(arr []int, comp func(int, int) bool) {
 			if comp(arr[j], arr[j+1]) {
 				//swapping
 				arr[j+1], arr[j] = arr[j], arr[j+1]
+
 			}
 		}
 	}
