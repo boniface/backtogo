@@ -13,7 +13,7 @@ import "fmt"
 //	left        *Node
 //	right       *Node
 //}
-
+// Start with A Queue Structure
 type BFSQueue struct {
 	start, end *BFSnode
 	length     int
@@ -21,11 +21,6 @@ type BFSQueue struct {
 type BFSnode struct {
 	value interface{}
 	next  *BFSnode
-}
-
-// Create a new queue
-func NewQuue() *BFSQueue {
-	return &BFSQueue{nil, nil, 0}
 }
 
 // Take the next item off the front of the queue
@@ -79,11 +74,6 @@ type BDFSNode struct {
 	prev  *BDFSNode
 }
 
-// Create a new stack
-func NewStack() *BDFStack {
-	return &BDFStack{nil, 0}
-}
-
 // Return the number of items in the stack
 func (this *BDFStack) Len() int {
 	return this.length
@@ -123,13 +113,6 @@ type Node struct {
 
 type Tree struct {
 	root *Node
-}
-
-//Create a Queue
-type Queue struct {
-	head *Node
-	tail *Node
-	size int
 }
 
 // Funtion to Print nodes as a Level
