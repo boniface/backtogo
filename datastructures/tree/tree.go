@@ -28,7 +28,7 @@ func (this *BFSQueue) Dequeue() interface{} {
 	if this.length == 0 {
 		return nil
 	}
-	n := this.start
+	node := this.start
 	if this.length == 1 {
 		this.start = nil
 		this.end = nil
@@ -36,34 +36,36 @@ func (this *BFSQueue) Dequeue() interface{} {
 		this.start = this.start.next
 	}
 	this.length--
-	return n.value
+	return node.value
 }
 
 // Put an item on the end of a queue
-func (this *BFSQueue) Enqueue(value interface{}) {
-	n := &BFSnode{value, nil}
-	if this.length == 0 {
-		this.start = n
-		this.end = n
+func (queue *BFSQueue) Enqueue(value interface{}) {
+	node := &BFSnode{value, nil}
+	if queue.length == 0 {
+		queue.start = node
+		queue.end = node
 	} else {
-		this.end.next = n
-		this.end = n
+		queue.end.next = node
+		queue.end = node
 	}
-	this.length++
+	queue.length++
 }
 
 // Return the number of items in the queue
-func (this *BFSQueue) Len() int {
-	return this.length
+func (queue *BFSQueue) Len() int {
+	return queue.length
 }
 
 // Return the first item in the queue without removing it
-func (this *BFSQueue) Peek() interface{} {
-	if this.length == 0 {
+func (queue *BFSQueue) Peek() interface{} {
+	if queue.length == 0 {
 		return nil
 	}
-	return this.start.value
+	return queue.start.value
 }
+
+// STACK FOR DEEP FIRST TRAVERSERSAL
 
 type BDFStack struct {
 	top    *BDFSNode
@@ -75,16 +77,16 @@ type BDFSNode struct {
 }
 
 // Return the number of items in the stack
-func (this *BDFStack) Len() int {
-	return this.length
+func (stack *BDFStack) Len() int {
+	return stack.length
 }
 
 // View the top item on the stack
-func (this *BDFStack) Peek() interface{} {
-	if this.length == 0 {
+func (stack *BDFStack) Peek() interface{} {
+	if stack.length == 0 {
 		return nil
 	}
-	return this.top.value
+	return stack.top.value
 }
 
 // Pop the top item of the stack and return it
@@ -106,6 +108,7 @@ func (this *BDFStack) Push(value interface{}) {
 	this.length++
 }
 
+// TREE CODE STARTS HERE
 type Node struct {
 	value       int
 	left, right *Node
@@ -123,36 +126,36 @@ func LevelOrderBinaryTree(arr []int) *Tree {
 }
 
 func levelOrderBinaryTree(arr []int, start int, size int) *Node {
-	curr := new(Node)
-	curr.value = arr[start]
+	newNode := new(Node)
+	newNode.value = arr[start]
 
 	left := 2*start + 1  // Odd Nodes to the Left based on Start
 	right := 2*start + 2 // Even Node to the Right  based on Start
 
 	if left < size {
-		curr.left = levelOrderBinaryTree(arr, left, size)
+		newNode.left = levelOrderBinaryTree(arr, left, size)
 	}
 	if right < size {
-		curr.right = levelOrderBinaryTree(arr, right, size)
+		newNode.right = levelOrderBinaryTree(arr, right, size)
 	}
-	return curr
+	return newNode
 }
 
-func addValueToNode(n *Node, value int) *Node {
+func addValueToNode(node *Node, value int) *Node {
 	// There is No Node
-	if n == nil {
-		n = new(Node)
-		n.value = value
-		return n
+	if node == nil {
+		node = new(Node)
+		node.value = value
+		return node
 	}
 	//  There is a Node
-	if value < n.value {
+	if value < node.value {
 		// Add to the Left
-		n.left = addValueToNode(n.left, value)
+		node.left = addValueToNode(node.left, value)
 	} else {
-		n.right = addValueToNode(n.right, value)
+		node.right = addValueToNode(node.right, value)
 	}
-	return n
+	return node
 }
 
 func (t *Tree) AddNode(value int) {
@@ -202,8 +205,9 @@ func printPostOrder(n *Node) {
 
 func (t *Tree) PrintPostOrder() {
 	fmt.Println(" Print Post Order")
-	printPostOrder(t.root)
 	fmt.Println()
+	printPostOrder(t.root)
+
 }
 
 func (t *Tree) PrintBreadthFirst() {
@@ -259,5 +263,4 @@ func main() {
 	t.PrintInOrder()
 	t.PrintBreadthFirst()
 	t.PrintDepthFirst()
-
 }

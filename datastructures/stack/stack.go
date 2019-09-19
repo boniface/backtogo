@@ -4,8 +4,10 @@ import "fmt"
 
 // Node Structure
 type Node struct {
-	value int
-	next  *Node
+	IPAddress   string // e.g "10.10.10.9"
+	ClassName   string // e.g "Class A"
+	LastIPOctet int
+	next        *Node
 }
 
 // The Stuck Structure
@@ -27,44 +29,48 @@ func (stack *Stack) IsEmpty() bool {
 	return stack.size == 0
 }
 
-func (stack *Stack) Peek() (int, bool) {
+func (stack *Stack) Peek() (*Node, bool) {
 	if stack.IsEmpty() {
 		fmt.Println(" the Stack is Empty")
-		return 0, false
+		return nil, false
 	}
-	return stack.head.value, true
+	return stack.head, true
 }
 
-func (stack *Stack) Push(value int) {
-	stack.head = &Node{value, stack.head}
+func (stack *Stack) Push(value *Node) {
+	var node = &Node{value.IPAddress,
+		value.ClassName,
+		value.LastIPOctet,
+		stack.head}
+	stack.head = node
 	stack.size++
 }
 
-func (stack *Stack) Pop() (int, bool) {
+func (stack *Stack) Pop() (Node, bool) {
 	//Check if Stack is Empty
 	if stack.IsEmpty() {
 		fmt.Println("Stack is Empty ")
 	}
 	//Get the Stack value
-	value := stack.head.value
+	value := stack.head
 	//Update the Head to the next Top Remaining Stack
 	stack.head = stack.head.next
 	//Reduce the Size of the Stack
 	stack.size--
 
 	//Return the Results
-	return value, true
+	return *value, true
 }
 
 func (stack *Stack) Print() {
 	// Put the Stack Head into the temporary Node
 	temp := stack.head
 	// Print Value
-	fmt.Println("Value put in the Stack ::")
+	fmt.Println("Octet Value put in the Stack ::")
 	// If the Temp had NO Error
 	for temp != nil {
 		// Print the Value of the Node Stored in Temp
-		fmt.Println(temp.value, "")
+		fmt.Println("IP Address", temp.IPAddress, "Class Name", temp.ClassName, "Last Octect", temp.LastIPOctet)
 		// Lood next Temp Value into temp
 		temp = temp.next
 	}
@@ -75,17 +81,34 @@ func (stack *Stack) Print() {
 
 // The Main Function Where Things Happen
 func main() {
+
+	//CREATE 3 Nodes
+	node1 := new(Node)
+	node1.IPAddress = "10.10.10.1"
+	node1.ClassName = "CLASS A"
+	node1.LastIPOctet = 1
+
+	node2 := &Node{"10.10.10.2", "CLASS A", 2, nil}
+
+	node3 := &Node{"10.10.10.3", "CLASS A", 3, nil}
+
+	node4 := &Node{"10.10.10.4", "CLASS A", 4, nil}
+
+	node5 := &Node{"10.10.10.5", "CLASS A", 5, nil}
+
 	// Create the New Stack
 	stack := new(Stack)
 	// Start Adding Numbers to it
-	stack.Push(10)
-	stack.Push(5)
-	stack.Push(1)
+	stack.Push(node1)
+	stack.Push(node2)
+	stack.Push(node3)
+	stack.Push(node4)
+	stack.Push(node5)
 	// As long as Stack is Empty
 	for stack.IsEmpty() == false {
 		// Remove from Stack
 		val, isValueThere := stack.Pop()
 		// Print Results
-		fmt.Println("The Values are ", val, " True or False  ", isValueThere)
+		fmt.Println("The IP is ", val, " True or False  ", isValueThere)
 	}
 }

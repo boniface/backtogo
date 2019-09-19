@@ -81,6 +81,7 @@ func (queue *Queue) Remove() (int, bool) {
 }
 
 func main() {
+	// Initilise Some Nodes
 	queue := new(Queue)
 	queue.Add(1)
 	queue.Add(2)
